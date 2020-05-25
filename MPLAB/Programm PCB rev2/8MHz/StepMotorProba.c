@@ -15,29 +15,29 @@ volatile SM_t StepMotor;
 void CongigPortsStepMotor(void) {//функция настройки портов ШД
     // Настройка портов управления обмотками ШД
     // Обмотка A
-    WINDING_A_TRIS = 0;
-    WINDING_A_OD = 0;
-    WINDING_A_CNIE = 0;
-    WINDING_A_CNPUE = 0;
-    WINDING_A_CNPDE = 0;
+    ENABLE_TRIS = 0;
+    ENABLE_OD = 0;
+    ENABLE_CNIE = 0;
+    ENABLE_CNPUE = 0;
+    ENABLE_CNPDE = 0;
     // Обмотка Б
-    WINDING_B_TRIS = 0;
-    WINDING_B_OD = 0;
-    WINDING_B_CNIE = 0;
-    WINDING_B_CNPUE = 0;
-    WINDING_B_CNPDE = 0;
+    RESET_TRIS = 0;
+    RESET_OD = 0;
+    RESET_CNIE = 0;
+    RESET_CNPUE = 0;
+    RESET_CNPDE = 0;
     // Обмотка В
-    WINDING_C_TRIS = 0;
-    WINDING_C_OD = 0;
-    WINDING_C_CNIE = 0;
-    WINDING_C_CNPUE = 0;
-    WINDING_C_CNPDE = 0;
+    STEP_TRIS = 0;
+    STEP_OD = 0;
+    STEP_CNIE = 0;
+    STEP_CNPUE = 0;
+    STEP_CNPDE = 0;
     // Обмотка Г
-    WINDING_D_TRIS = 0;
-    WINDING_D_OD = 0;
-    WINDING_D_CNIE = 0;
-    WINDING_D_CNPUE = 0;
-    WINDING_D_CNPDE = 0;
+    DIR_TRIS = 0;
+    DIR_OD = 0;
+    DIR_CNIE = 0;
+    DIR_CNPUE = 0;
+    DIR_CNPDE = 0;
     //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //настройка портов концевиков ШД
     // Нижний концевик (конечной позиции)
@@ -79,10 +79,10 @@ void InitStepMotor(void) { //функция начальной инициализации.
     StepMotor.Trailer.Alarm = OFF;
     //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     // Зададим начальное состояние портов управления обмотками ШД
-    WINDING_A_LAT = 0;
-    WINDING_B_LAT = 0;
-    WINDING_C_LAT = 0;
-    WINDING_D_LAT = 0;
+    ENABLE_LAT = 0;
+    RESET_LAT = 1;
+    STEP_LAT = 0;
+    DIR_LAT = 0;
     //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     // Определим начальное положение концевиков
     // Схемотехника реализована таким образом, что при замкнутом состоянии концевика на входе порта контроля 0 (=> 0-замкнут,1 - разомкнут)
@@ -1029,11 +1029,10 @@ void StepReaction(void) {
 }
 void CheckStepMotorState(void){
     if(T2CONbits.TON == 0){//ШД выключен - присвоить единственное верное состояние
-        WINDING_A_LAT = 0;
-        WINDING_B_LAT = 0;
-        WINDING_C_LAT = 0;
-        WINDING_D_LAT = 0;
-        StepMotor.MovingSettings.MovingState           = STOP;
+        ENABLE_LAT = 0;
+        STEP_LAT = 0;
+        
+        StepMotor.MovingSettings.MovingState    = STOP;
         StepMotor.MovingSettings.Direction      = STOP;
         StepMotor.MovingSettings.Speed          = STOP;
         StepMotor.MovingSettings.TargetPosition = STOP;
