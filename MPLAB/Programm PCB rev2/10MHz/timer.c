@@ -118,71 +118,48 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){//T=1ms
 }
 //_____________________________________________________________________________________
 void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void){//T=25us
-   static unsigned char stepType = 0;
+   static unsigned char prevDirection = STOP;
+   int delay1 = 32;//циклов соответствует 2мкс при FCY = 16000000
+   int delay2 = 8; //циклов соответствует 500нс при FCY =16000000
    ClearFlagTimer2Int();
+   
    if (StepMotor.State.NeedStepReaction == NO) {
         if (StepMotor.MovingSettings.MovingState == STOP) {
             //не делаем следующую фазу
-             WINDING_A_LAT = 0;
-             WINDING_B_LAT = 0;
-             WINDING_C_LAT = 0;
-             WINDING_D_LAT = 0;
+             ENABLE_LAT = 1;
             OffTimer2();
             StepMotor_Off();
-            TMR2 =0;
-
+            prevDirection = STOP;
+            TMR2 = 0;
             //_T2IE = 0;
         } else {
-            switch (stepType) {
-                case 0:
-                    WINDING_A_LAT = 1;
-                    WINDING_B_LAT = 0;
-                    WINDING_C_LAT = 0;
-                    WINDING_D_LAT = 1;
-                    stepType++;
-                    break;
-                case 1:
-                    if (StepMotor.MovingSettings.Direction == FORWARD) {
-                        WINDING_A_LAT = 0;
-                        WINDING_B_LAT = 0;
-                        WINDING_C_LAT = 1;
-                        WINDING_D_LAT = 1;
-                    } else {//StepMotor.Settings.Direction == BACK
-                        WINDING_A_LAT = 1;
-                        WINDING_B_LAT = 1;
-                        WINDING_C_LAT = 0;
-                        WINDING_D_LAT = 0;
-                    }
-                    stepType++;
-                    break;
-                case 2:
-                    WINDING_A_LAT = 0;
-                    WINDING_B_LAT = 1;
-                    WINDING_C_LAT = 1;
-                    WINDING_D_LAT = 0;
-                    stepType++;
-                    break;
-                case 3:
-                    if (StepMotor.MovingSettings.Direction == FORWARD) {
-                        WINDING_A_LAT = 1;
-                        WINDING_B_LAT = 1;
-                        WINDING_C_LAT = 0;
-                        WINDING_D_LAT = 0;
-//                        if(StepMotor.MovingSettings.Mode == STOP){
-//                            StepMotor.State.GeneralStepCounter++;
-//                        }
-                     } else {//StepMotor.Settings.Direction == BACK
-                        WINDING_A_LAT = 0;
-                        WINDING_B_LAT = 0;
-                        WINDING_C_LAT = 1;
-                        WINDING_D_LAT = 1;
-//                        if(StepMotor.MovingSettings.Mode == STOP){
-//                            StepMotor.State.GeneralStepCounter--;
-//                        }
-                     }
-                    stepType=0;
-                    break;
+            if(ENABLE_PORT == 1){
+                ENABLE_LAT = 0;
+                while(delay2!=0){
+                    delay2--;
+                }
+                delay2 = 8;   
             }
+            if(prevDirection!=StepMotor.MovingSettings.Direction){
+                if (StepMotor.MovingSettings.Direction == FORWARD) {
+                    DIR_LAT = 1;
+                    prevDirection = FORWARD;
+                } else {//StepMotor.Settings.Direction == BACK
+                    DIR_LAT = 0;
+                    prevDirection = BACK;
+                }
+                while(delay2!=0){
+                    delay2--;
+                }
+                delay2 = 8;      
+            }           
+            
+            STEP_LAT = 1;
+            while(delay1!=0){
+                delay1--;
+            }
+            delay1 = 32;
+            STEP_LAT = 0;
             
             StepMotor.State.MovingStepCounter++;
             if (StepMotor.MovingSettings.Direction == FORWARD) {

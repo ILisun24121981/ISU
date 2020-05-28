@@ -32,37 +32,56 @@
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 // Назначение портов управления обмотками ШД.
 //Обмотка A
-#define WINDING_A_TRIS	_TRISE1
-#define WINDING_A_LAT	_LATE1
-#define WINDING_A_PORT	_RE1
-#define WINDING_A_OD	_ODE1
-#define WINDING_A_CNIE	_CN59IE
-#define WINDING_A_CNPUE	_CN59PUE
-#define WINDING_A_CNPDE	_CN59PDE
+#define ENABLE_TRIS     _TRISE1
+#define ENABLE_LAT      _LATE1
+#define ENABLE_PORT     _RE1
+#define ENABLE_OD       _ODE1
+#define ENABLE_CNIE     _CN59IE
+#define ENABLE_CNPUE	_CN59PUE
+#define ENABLE_CNPDE	_CN59PDE
 //Обмотка Б
-#define WINDING_B_TRIS	_TRISE0
-#define WINDING_B_LAT	_LATE0
-#define WINDING_B_PORT	_RE0
-#define WINDING_B_OD	_ODE0
-#define WINDING_B_CNIE	_CN58IE
-#define WINDING_B_CNPUE	_CN58PUE
-#define WINDING_B_CNPDE	_CN58PDE
+#define RESET_TRIS	_TRISE0
+#define RESET_LAT	_LATE0
+#define RESET_PORT	_RE0
+#define RESET_OD	_ODE0
+#define RESET_CNIE	_CN58IE
+#define RESET_CNPUE	_CN58PUE
+#define RESET_CNPDE	_CN58PDE
 //Обмотка В
-#define WINDING_C_TRIS	_TRISF1
-#define WINDING_C_LAT	_LATF1
-#define WINDING_C_PORT	_RF1
-#define WINDING_C_OD	_ODF1
-#define WINDING_C_CNIE	_CN69IE
-#define WINDING_C_CNPUE	_CN69PUE
-#define WINDING_C_CNPDE	_CN69PDE
+#define STEP_TRIS	_TRISF1
+#define STEP_LAT	_LATF1
+#define STEP_PORT	_RF1
+#define STEP_OD     _ODF1
+#define STEP_CNIE	_CN69IE
+#define STEP_CNPUE	_CN69PUE
+#define STEP_CNPDE	_CN69PDE
 //Обмотка Г
-#define WINDING_D_TRIS	_TRISF0
-#define WINDING_D_LAT	_LATF0
-#define WINDING_D_PORT	_RF0
-#define WINDING_D_OD	_ODF0
-#define WINDING_D_CNIE	_CN68IE
-#define WINDING_D_CNPUE	_CN68PUE
-#define WINDING_D_CNPDE	_CN68PDE
+#define DIR_TRIS	_TRISF0
+#define DIR_LAT     _LATF0
+#define DIR_PORT	_RF0
+#define DIR_OD      _ODF0
+#define DIR_CNIE	_CN68IE
+#define DIR_CNPUE	_CN68PUE
+#define DIR_CNPDE	_CN68PDE
+//_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+// Назначение  портов концевиков ШД
+// Конечный датчик(концевик)
+#define END_TRAILER_TRIS	_TRISD1
+#define END_TRAILER_LAT         _LATD1
+#define END_TRAILER_PORT        _RD1
+#define END_TRAILER_OD		_ODD1
+#define END_TRAILER_CNIE        _CN50IE
+#define END_TRAILER_CNPUE       _CN50PUE
+#define END_TRAILER_CNPDE       _CN50PDE
+// Начальный датчик(концевик)
+#define START_TRAILER_TRIS	_TRISC14
+#define START_TRAILER_LAT	_LATC14
+#define START_TRAILER_PORT	_RC14
+#define START_TRAILER_OD	_ODC14
+#define START_TRAILER_CNIE	_CN0IE
+#define START_TRAILER_CNPUE	_CN0PUE
+#define START_TRAILER_CNPDE	_CN0PDE
+
 //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 // Назначение  портов концевиков ШД
 // Конечный датчик(концевик)

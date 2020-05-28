@@ -79,7 +79,7 @@ void InitStepMotor(void) { //функция начальной инициализации.
     StepMotor.Trailer.Alarm = OFF;
     //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     // Зададим начальное состояние портов управления обмотками ШД
-    ENABLE_LAT = 0;
+    ENABLE_LAT = 1;
     RESET_LAT = 1;
     STEP_LAT = 0;
     DIR_LAT = 0;
@@ -1029,7 +1029,7 @@ void StepReaction(void) {
 }
 void CheckStepMotorState(void){
     if(T2CONbits.TON == 0){//ШД выключен - присвоить единственное верное состояние
-        ENABLE_LAT = 0;
+        ENABLE_LAT = 1;
         STEP_LAT = 0;
         
         StepMotor.MovingSettings.MovingState    = STOP;

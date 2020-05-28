@@ -133,7 +133,7 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void){//T=25us
             TMR2 = 0;
             //_T2IE = 0;
         } else {
-            if(ENABLE_PORT != 0){
+            if(ENABLE_PORT == 1){
                 ENABLE_LAT = 0;
                 while(delay2!=0){
                     delay2--;
